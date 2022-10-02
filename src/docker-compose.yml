@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  testonlineproject.api:
+    image: ${DOCKER_REGISTRY-}testonlineprojectapi
+    container_name: testonlineprojectapi
+    build:
+      context: .
+      dockerfile: TestOnlineProject.API/Dockerfile
+    depends_on:
+      - sqlserver
