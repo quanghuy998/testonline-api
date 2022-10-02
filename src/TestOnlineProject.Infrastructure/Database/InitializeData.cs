@@ -6,23 +6,16 @@ namespace TestOnlineProject.Infrastructure.Database
     {
         public static void CreateInitializeData(AppDbContext dbContext)
         {
+            //dbContext.Tests.AddRange(CreateTest(dbContext));
+            //dbContext.SaveChanges();
         }
 
 
-        public static Question CreateInitializeQuestion(AppDbContext dbContext)
+        public static Test CreateTest(AppDbContext dbContext)
         {
             var question = new Question("This is a question", 3, 30, QuestionType.MultipChoice);
-            var choice = new Choice("Choice number 1", true);
-            var choice2 = new Choice("Choice number 2", false);
-            question.AddChoiceToQuestion(choice);
-            question.AddChoiceToQuestion(choice2);
+            question.Id = Guid.NewGuid();
 
-            return question;
-        }
-
-        public static Test CreateInitializeTest(AppDbContext dbContext)
-        {
-            var question = CreateInitializeQuestion(dbContext);
             var test = new Test("Test number 1");
             test.AddQuestion(question);
 

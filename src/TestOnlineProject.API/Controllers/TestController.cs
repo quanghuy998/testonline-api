@@ -67,24 +67,6 @@ namespace TestOnlineProject.API.Controllers
             return Ok(result.Response);
         }
 
-        [HttpPut]
-        [Route("{id}/publicize")]
-        public async Task<IActionResult> PublicAndNotPublicTest([FromRoute] Guid id,
-                                    [FromBody] PublicAndNotPublicTestRequest request,
-                                    CancellationToken cancellationToken)
-        {
-            var command = new PublicAndNotPublicTestCommand()
-            {
-                Id = id,
-                IsPublic = request.isPublic,
-            };
-
-            var result = await _commandBus.SendAsync(command, cancellationToken);
-            if (!result.IsSuccess) return BadRequest(result.Message);
-
-            return Ok(result.Response);
-        }
-
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteTest([FromRoute] Guid id, CancellationToken cancellationToken)

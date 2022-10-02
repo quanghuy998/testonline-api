@@ -85,7 +85,7 @@ namespace TestOnlineProject.UnitTest.ApplicationTest.Commands.Tests
             var choice = new Choice(choiceText, isCorrect);
             choice.Id = command.ChoiceId;
 
-            question.AddChoiceToQuestion(choice);
+            question.AddChoice(choice);
             test.AddQuestion(question);
 
             return test;
@@ -106,7 +106,7 @@ namespace TestOnlineProject.UnitTest.ApplicationTest.Commands.Tests
             var choice = new Choice(choiceText, isCorrect);
             choice.Id = command.ChoiceId;
 
-            question.AddChoiceToQuestion(choice);
+            question.AddChoice(choice);
             test.AddQuestion(question);
 
             return test;
@@ -127,7 +127,7 @@ namespace TestOnlineProject.UnitTest.ApplicationTest.Commands.Tests
             var choice = new Choice(choiceText, isCorrect);
             choice.Id = Guid.NewGuid();
 
-            question.AddChoiceToQuestion(choice);
+            question.AddChoice(choice);
             test.AddQuestion(question);
 
             return test;

@@ -27,7 +27,6 @@ namespace TestOnlineProject.Application.Commands.Tests
             if (test == null) return CommandResult<Guid>.Error("The test does not exist.");
 
             var question = new Question(request.QuestionText, request.Point, request.TimeLimit, request.QuestionType);
-            question.Id = Guid.NewGuid();
             test.AddQuestion(question);
 
             await _testRepository.SaveAsync(test, cancellationToken);

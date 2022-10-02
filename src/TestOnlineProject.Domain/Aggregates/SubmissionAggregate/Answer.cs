@@ -4,9 +4,8 @@ namespace TestOnlineProject.Domain.Aggregates.SubmissionAggregate
 {
     public class Answer : Entity<Guid>
     {
-        public Guid QuestionId { get; }
-        public string Answer { get; private set; }
-        public string Question { get; private set; }
+        public string QuestionText { get; private set; }
+        public string AnswerText { get; private set; }
         public int Score { get; private set; }
 
         private Answer()
@@ -14,16 +13,11 @@ namespace TestOnlineProject.Domain.Aggregates.SubmissionAggregate
 
         }
 
-        public Answer(Guid questionId)
+        public Answer(string questionText, string answerText)
         {
-            QuestionId = questionId;
-            Answer = null;
+            QuestionText = questionText;
+            AnswerText = answerText;
             Score = 0;
-        }
-
-        public void AddAnswerText(string answerText)
-        {
-            Answer = answerText;
         }
 
         public void SetResult(int score)

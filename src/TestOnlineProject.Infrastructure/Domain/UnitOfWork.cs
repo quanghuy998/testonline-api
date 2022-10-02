@@ -16,68 +16,62 @@ namespace TestOnlineProject.Infrastructure.Domain
         }
         public async Task ExecuteAsync(Func<Task> action, CancellationToken cancellationToken = default)
         {
-            await action();
-            await _context.SaveChangesAsync(cancellationToken);
-            //if (_hasActiveTransaction)
-            //{
-            //    await action();
-            //    return;
-            //}   
-            //var strategy = _context.Database.CreateExecutionStrategy();
-            //await strategy.ExecuteAsync(async () =>
-            //{
-            //    await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            //    _hasActiveTransaction = true;
-            //    try
-            //    {
-            //        await action();
-            //        await _context.SaveChangesAsync(cancellationToken);
-            //        await transaction.CommitAsync(cancellationToken);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        await transaction.RollbackAsync(cancellationToken);
-            //        throw;
-            //    }
-            //    finally
-            //    {
-            //        _hasActiveTransaction = false;
-            //    }
-            //});
+            if (_hasActiveTransaction)
+            {
+                await action();
+                return;
+            }
+            var strategy = _context.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(async () =>
+            {
+                await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+                _hasActiveTransaction = true;
+                try
+                {
+                    await action();
+                    await _context.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync(cancellationToken);
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync(cancellationToken);
+                    throw;
+                }
+                finally
+                {
+                    _hasActiveTransaction = false;
+                }
+            });
         }
 
-        public async Task<TResponse> ExecuteAsync<TResponse>(Func<Task<TResponse>> action, CancellationToken cancellationToken = default)
+        public Task<TResponse> ExecuteAsync<TResponse>(Func<Task<TResponse>> action, CancellationToken cancellationToken = default)
         {
-            var result = await action();
-            await _context.SaveChangesAsync(cancellationToken);
+            if (_hasActiveTransaction) return action();
 
-            return result;
-            //if (_hasActiveTransaction) return action();
+            var strategy = _context.Database.CreateExecutionStrategy();
 
-            //var strategy = _context.Database.CreateExecutionStrategy();
+            return strategy.ExecuteAsync(async () =>
+            {
+                await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+                _hasActiveTransaction = true;
+                try
+                {
+                    var result = await action();
+                    await _context.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync(cancellationToken);
 
-            //return strategy.ExecuteAsync(async () =>
-            //{
-            //    await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            //    _hasActiveTransaction = true;
-            //    try
-            //    {
-            //        var result = await action();
-            //        await _context.SaveChangesAsync(cancellationToken);
-            //        await transaction.CommitAsync(cancellationToken);
-
-            //        return result;
-            //    }
-            //    catch (Exception)
-            //    {
-            //        await transaction.RollbackAsync(cancellationToken);
-            //        throw;
-            //    }
-            //    finally
-            //    {
-            //        _hasActiveTransaction = false;
-            //    }
-            //});
+                    return result;
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync(cancellationToken);
+                    throw;
+                }
+                finally
+                {
+                    _hasActiveTransaction = false;
+                }
+            });
         }
     }
 }

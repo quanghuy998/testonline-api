@@ -55,7 +55,7 @@ namespace TestOnlineProject.UnitTest.DomainTest
             var question = GivenSampleQuestion();
             var choice = GivenSampleChoice();
 
-            question.AddChoiceToQuestion(choice);
+            question.AddChoice(choice);
 
             Assert.Contains(choice, question.Choices);
         }
@@ -68,9 +68,9 @@ namespace TestOnlineProject.UnitTest.DomainTest
             var question = GivenSampleQuestion();
             var choice = GivenSampleChoice();
 
-            question.AddChoiceToQuestion(choice);
+            question.AddChoice(choice);
             choice.UpdateChoice(choiceText, isCorrect);
-            question.UpdateChoiceInQuestion(choice);
+            question.UpdateChoice(choice);
 
             Assert.Contains(choice, question.Choices);
         }
@@ -82,8 +82,8 @@ namespace TestOnlineProject.UnitTest.DomainTest
             var question = GivenSampleQuestion();
             var choice = GivenSampleChoice();
 
-            question.AddChoiceToQuestion(choice);
-            question.RemoveChoiceFromQuestion(choice);
+            question.AddChoice(choice);
+            question.RemoveChoice(choice);
 
             Assert.Empty(question.Choices);
         }

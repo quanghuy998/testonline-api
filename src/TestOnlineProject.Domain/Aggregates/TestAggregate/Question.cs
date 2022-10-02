@@ -32,19 +32,19 @@ namespace TestOnlineProject.Domain.Aggregates.TestAggregate
             TimeLimit = timeLitmit;
         }
 
-        public void AddChoiceToQuestion(Choice request)
+        public void AddChoice(Choice request)
         {
             if (Choices is null) { Choices = new List<Choice> { request }; }
             else Choices.Add(request);
         }
 
-        public void UpdateChoiceInQuestion(Choice request)
+        public void UpdateChoice(Choice request)
         {
             var choice = Choices.Find(x => x.Id == request.Id);
             choice.UpdateChoice(request.ChoiceText, request.IsCorrect);
         }
 
-        public void RemoveChoiceFromQuestion(Choice request)
+        public void RemoveChoice(Choice request)
         {
             var choice = Choices.Find(x => x.Id == request.Id);
             Choices.Remove(choice);

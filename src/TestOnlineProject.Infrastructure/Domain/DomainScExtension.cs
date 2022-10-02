@@ -22,7 +22,7 @@ namespace TestOnlineProject.Infrastructure.Domain
             services.AddScoped<IUnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<AppDbContext>()));
             services.AddScoped<ITestRepository, TestRepository>();
             services.AddScoped<ICandidateRepository, CandidateRepository>();
-            services.AddScoped<ICandidateTestRepository, CandidateTestRepository>();
+            services.AddScoped<ISubmissionRepository, SubmissionRepository>();
 
             var serviceProvider = services.BuildServiceProvider();
             using (var scope = serviceProvider.CreateScope())
