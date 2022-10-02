@@ -2,7 +2,7 @@
 
 namespace TestOnlineProject.Domain.Aggregates.SubmissionAggregate
 {
-    public interface ICandidateTestRepository : IRepository<Submission, Guid>
+    public interface ISubmissionRepository : IRepository<Submission, Guid>
     {
 
     }

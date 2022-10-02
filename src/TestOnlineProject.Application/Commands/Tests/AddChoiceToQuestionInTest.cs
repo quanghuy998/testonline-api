@@ -29,9 +29,9 @@ namespace TestOnlineProject.Application.Commands.Tests
             if (question is null) return CommandResult<Guid>.Error("The question does not exist in this test.");
 
             if (question.QuestionType == QuestionType.Code) return CommandResult<Guid>.Error("The question type is not multip choice.");
-            var choice = new Choice(request.ChoiceText, request.IsCorrect);
-            choice.Id = Guid.NewGuid();
-            question.AddChoiceToQuestion(choice);
+
+            var choice = new Choice(request.QuestionId, request.ChoiceText, request.IsCorrect);
+            test.AddChoice(choice);
 
             await _testRepository.SaveAsync(test, cancellationToken);
 

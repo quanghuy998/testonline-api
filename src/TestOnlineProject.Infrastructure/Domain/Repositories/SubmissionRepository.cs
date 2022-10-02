@@ -3,9 +3,9 @@ using TestOnlineProject.Infrastructure.Database;
 
 namespace TestOnlineProject.Infrastructure.Domain.Repositories
 {
-    public class CandidateTestRepository : BaseRepository<Submission, Guid>, ICandidateTestRepository
+    public class SubmissionRepository : BaseRepository<Submission, Guid>, ISubmissionRepository
     {
-        public CandidateTestRepository(AppDbContext context) : base(context)
+        public SubmissionRepository(AppDbContext context) : base(context)
         {
 
         }

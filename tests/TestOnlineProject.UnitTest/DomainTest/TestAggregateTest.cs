@@ -21,22 +21,12 @@ namespace TestOnlineProject.UnitTest.DomainTest
         public void GivenInformation_WhenUpdatingTest_ThenItShouldBeUpdated()
         {
             string title = "Test 2";
-            var test = GivenSampleTest();
-
-            test.UpdateTest(title);
-
-            Assert.Equal(title, test.Title);
-        }
-
-        [Fact]
-        public void GivenPublicRequest_WhenPublicizingTest_ThenItShouldBePublicized()
-        {
             bool isPublic = true;
             var test = GivenSampleTest();
+            
+            test.UpdateTest(title, isPublic);
 
-            test.PublicAndNotPublicTest(isPublic);
-
-            Assert.True(test.IsPublish);
+            Assert.Equal(title, test.Title);
         }
 
         [Fact]

@@ -7,6 +7,7 @@ namespace TestOnlineProject.Application.Commands.Tests
     {
         public Guid Id { get; init; }
         public string Title { get; init; }
+        public bool IsPublish { get; init; }
     }
 
     public class UpdateTestCommandHandler : ICommandHandler<UpdateTestCommand, Guid>
@@ -23,7 +24,7 @@ namespace TestOnlineProject.Application.Commands.Tests
             var test = await _testRepository.FindOneAsync(request.Id, cancellationToken);
             if (test == null) return CommandResult<Guid>.Error("The test does not exist.");
 
-            test.UpdateTest(request.Title);
+            test.UpdateTest(request.Title, request.IsPublish);
             await _testRepository.SaveAsync(test, cancellationToken);
 
             return CommandResult<Guid>.Success(test.Id);

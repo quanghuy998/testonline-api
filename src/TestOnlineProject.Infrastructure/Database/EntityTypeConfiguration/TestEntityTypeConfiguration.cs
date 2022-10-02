@@ -26,6 +26,7 @@ namespace TestOnlineProject.Infrastructure.Database.EntityTypeConfiguration
                 {
                     y.ToTable("Choice");
                     y.HasKey(p => p.Id);
+                    y.WithOwner().HasForeignKey(k => k.QuestionId);
 
                     y.Property(p => p.ChoiceText);
                     y.Property(p => p.IsCorrect);

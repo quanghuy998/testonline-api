@@ -29,7 +29,7 @@ namespace TestOnlineProject.Application.Commands.Tests
 
             var choice = question.Choices.Find(x => x.Id == request.ChoiceId);
             if (choice is null) return CommandResult<Guid>.Error("The choice does not exist in this question.");
-            question.RemoveChoiceFromQuestion(choice);
+            test.RemoveChoice(choice);
 
             await _testRepository.SaveAsync(test, cancellationToken);
 

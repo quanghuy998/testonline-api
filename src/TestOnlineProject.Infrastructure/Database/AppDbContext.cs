@@ -9,7 +9,7 @@ namespace TestOnlineProject.Infrastructure.Database
     {
         public DbSet<Test> Tests { get; set; }
         public DbSet<Candidate> Candidates { get; set; }
-        public DbSet<Submission> CandidateTests { get; set; }
+        public DbSet<Submission> Submissions { get; set; }
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
